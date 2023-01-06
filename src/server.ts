@@ -1,4 +1,4 @@
-import express, { Application, Request, Response } from "express";
+import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
@@ -30,6 +30,14 @@ app.get("/", (req: Request, res: Response): void => {
 
 //Routes
 app.use("/api/v1", userRoute);
+
+// Error handling
+app.use("*", (req: Request, res: Response, next: NextFunction) => {
+  const error = new Error("Not Found");
+  console.log(error);
+
+  return res.status(404).json({ message: error.message });
+});
 
 app.listen(port, (): void => {
   console.log("SERVER IS UP ON PORT:", port);
