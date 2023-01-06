@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 import userRoute from "./routes/userRoute";
+import authRoute from "./routes/authRoute";
 import mongoose from "mongoose";
 import { config } from "./config/config";
 
@@ -29,6 +30,7 @@ app.get("/", (req: Request, res: Response): void => {
 });
 
 //Routes
+app.use("/api/v1", authRoute);
 app.use("/api/v1", userRoute);
 
 // Error handling
