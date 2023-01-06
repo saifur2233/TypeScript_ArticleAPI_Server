@@ -36,9 +36,36 @@ const getAllBlogs = (req: Request, res: Response, next: NextFunction) => {
     .catch((error) => res.status(500).json({ error }));
 };
 
-const updateBlog = (req: Request, res: Response, next: NextFunction) => {};
+const updateBlog = (req: Request, res: Response, next: NextFunction) => {
+  const blogId = req.params.blogId;
 
-const deleteBlog = (req: Request, res: Response, next: NextFunction) => {};
+  return Blog.findById(blogId)
+    .then((blog) => {
+      if (blog) {
+        blog.set(req.body);
+
+        return blog
+          .save()
+          .then((blog) => res.status(201).json({ blog }))
+          .catch((error) => res.status(500).json({ error }));
+      } else {
+        return res.status(404).json({ message: "not found" });
+      }
+    })
+    .catch((error) => res.status(500).json({ error }));
+};
+
+const deleteBlog = (req: Request, res: Response, next: NextFunction) => {
+  const blogId = req.params.blogId;
+
+  return Blog.findByIdAndDelete(blogId)
+    .then((blog) =>
+      blog
+        ? res.status(201).json({ blog, message: "Blog Deleted" })
+        : res.status(404).json({ message: "not found" })
+    )
+    .catch((error) => res.status(500).json({ error }));
+};
 
 export default {
   createBlog,

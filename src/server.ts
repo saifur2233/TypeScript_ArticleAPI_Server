@@ -4,6 +4,7 @@ import dotenv from "dotenv";
 dotenv.config();
 import userRoute from "./routes/userRoute";
 import authRoute from "./routes/authRoute";
+import blogRoute from "./routes/blogRoute";
 import mongoose from "mongoose";
 import { config } from "./config/config";
 
@@ -32,6 +33,7 @@ app.get("/", (req: Request, res: Response): void => {
 //Routes
 app.use("/api/v1", authRoute);
 app.use("/api/v1", userRoute);
+app.use("/api/v1", blogRoute);
 
 // Error handling
 app.use("*", (req: Request, res: Response, next: NextFunction) => {
