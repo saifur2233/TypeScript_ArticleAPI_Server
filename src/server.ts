@@ -2,6 +2,7 @@ import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
+import cookieParser from "cookie-parser";
 import userRoute from "./routes/userRoute";
 import authRoute from "./routes/authRoute";
 import blogRoute from "./routes/blogRoute";
@@ -22,6 +23,7 @@ mongoose
     console.log(error);
   });
 
+app.use(cookieParser());
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
